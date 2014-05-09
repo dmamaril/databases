@@ -6,8 +6,8 @@ var mysql = require('mysql');
  * database: "chat" specifies that we're using the database called
  * "chat", which we created by running schema.sql.*/
 var dbConnection = mysql.createConnection({
-  user: "",
-  password: "",
+  user: "localhost",
+  password: "root",
   database: "chat"
 });
 
@@ -19,3 +19,38 @@ dbConnection.connect();
 
 /* You already know how to create an http server from the previous
  * assignment; you can re-use most of that code here. */
+
+
+
+var headers = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'access-control-allow-': 'content-type, accept',
+  'access-control-max-age' : 10
+};
+
+var handleRequest = function (req, res) {
+
+  res.writeHead(200, headers);
+
+  if (req.method === 'GET') {
+    // access database and see what file we get? YEZ
+      // make it awesome
+
+  }
+
+  if (req.method === 'POST') {
+    var message = '';
+    res.on('data', function (chunk) {
+      message += chunk;
+    }).on('end', function () {
+
+    });
+  }
+
+  res.end();
+
+};
+
+// ***** START NODE SERVER ***** //
+require('http').createServer(handleReqest).listen(8080, '127.0.0.1');
