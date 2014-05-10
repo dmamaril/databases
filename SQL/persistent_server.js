@@ -27,34 +27,36 @@ var headers = {
   'access-control-allow-': 'content-type, accept',
   'access-control-max-age' : 10
 };
-
-var handle = function (req, res) {
-
-  res.writeHead(200, headers);
   /*
+    TO DO
     use chat;
     show tables;
     show columns in messages; // displays stuffs in tables
     drop table messages; // deletes table
-    source schema.sql(path) // reloads sql
+    source SQL/schema.sql; // reloads sql
+    select * from messages;
   */
-  // if (req.method === 'GET') {
-  //   dbConnection.query('SELECT * FROM messages', function (err, response) {
-  //     console.log('huh');
-  //     res.end();
-  //   });
-  // }
 
-  // switch back to post later
+var handle = function (req, res) {
+
   if (req.method === 'GET') {
+    headers['Content-type'] = 'application/json';
+    res.writeHead(200, headers);
+    dbConnection.query('SELECT * FROM messages', function (err, response) {
+      res.end(JSON.stringify(response));
+    });
+  }
+
+  if (req.method === 'POST') {
+    res.writeHead(200, headers);
     var message = '';
     res.on('data', function (datum) {
       message += datum;
     }).on('end', function () {
       message = JSON.parse(message);
-      console.log(message);
-      dbConnection.query('INSERT INTO messages (username, text) VALUES (' + message.username + ',' + message.text + ');', function (err, res) {
+      dbConnection.query('INSERT INTO messages set ? ', message, function (err, res) {
         if (err) { throw err; }
+        console.log(res);
         console.log('Confirmed!');
       });
     });
@@ -71,6 +73,7 @@ console.log ('Session started.');
 
 // ***** REQUEST NODE MODULE FOR TESTS ***** //
 var request = require('request');
+
 
 
 // $.ajax({

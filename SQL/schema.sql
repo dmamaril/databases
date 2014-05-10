@@ -6,7 +6,7 @@ CREATE TABLE messages (
  /* Describe your table here.*/
  id int(10) AUTO_INCREMENT,
  username varchar(20),
- text varchar(256),
+ text text,
  PRIMARY KEY (id)
  );
 
