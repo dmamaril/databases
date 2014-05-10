@@ -42,19 +42,23 @@ var handle = function (req, res) {
   console.log('Serving request from ' + req.url + ' for a ' + req.method + ' request.');
   var index = req.url.lastIndexOf('/');
   var reqUrl = req.url.slice(index+1);
-  console.log(reqUrl);
-
 
   if (req.method === 'GET') {
     headers['Content-type'] = 'application/json';
     res.writeHead(200, headers);
-
-
-    dbConnection.query('SELECT * FROM messages', function (err, response) {
-      res.end(JSON.stringify(response));
-    });
-
+    if (req.url === '/') {
+      dbConnection.query('SELECT * FROM messages', function (err, response) {
+        console.log(response);
+        res.end(JSON.stringify(response));
+      });
+    } else {
+      dbConnection.query('SELECT * FROM roomname where roomname = ' + reqURL, function (err, response) {
+        console.log(response);
+        res.end(JSON.stringify(response));
+      });
+    }
   }
+
 
   // ***** HANLDE POST REQUEST COMPLETE ***** //
   if (req.method === 'POST') {
