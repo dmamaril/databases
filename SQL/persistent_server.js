@@ -39,6 +39,8 @@ var headers = {
 
 var handle = function (req, res) {
 
+  console.log('Serving request from ' + req.url + ' for a ' + req.method + ' request.');
+
   if (req.method === 'GET') {
     headers['Content-type'] = 'application/json';
     res.writeHead(200, headers);
@@ -47,22 +49,24 @@ var handle = function (req, res) {
     });
   }
 
+  // ***** HANLDE POST REQUEST COMPLETE ***** //
   if (req.method === 'POST') {
     res.writeHead(200, headers);
     var message = '';
-    res.on('data', function (datum) {
+    req.on('data', function (datum) {
       message += datum;
     }).on('end', function () {
       message = JSON.parse(message);
       dbConnection.query('INSERT INTO messages set ? ', message, function (err, res) {
         if (err) { throw err; }
-        console.log(res);
-        console.log('Confirmed!');
+        dbConnection.query('SELECT * from messages', function (err, response) {
+          console.log(response);
+        });
       });
+      res.end();
     });
   }
 
-  res.end();
 };
 
 // ***** START NODE SERVER ***** //
@@ -71,16 +75,12 @@ require('http').createServer(handle).listen(3000, '127.0.0.1');
 console.log ('Session started.');
 
 
-// ***** REQUEST NODE MODULE FOR TESTS ***** //
-var request = require('request');
-
-
-
+// var message = {username: 'don', text: 'will is a genius'};
 // $.ajax({
 //   url: 'http://127.0.0.1:3000',
-//   data: 'POST',
-//   data: '{"username" : "don", "text" : "hi"}',
+//   type: 'POST',
+//   data: JSON.stringify(message),
 //   success: function (response) {
-//     console.log('plssss');
+//     console.log('Success!');
 //   }
 // });
