@@ -1,0 +1,45 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/Users/student/.nvm/v0.10.26/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'msql',
+1 verbose cli   '--save' ]
+2 info using npm@1.4.6
+3 info using node@v0.10.26
+4 verbose cache add [ 'msql', null ]
+5 verbose cache add name=undefined spec="msql" args=["msql",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'msql',
+6 verbose parsed url   path: 'msql',
+6 verbose parsed url   href: 'msql' }
+7 silly lockFile 018c5c2c-msql msql
+8 verbose lock msql /Users/student/.npm/018c5c2c-msql.lock
+9 silly lockFile 018c5c2c-msql msql
+10 silly lockFile 018c5c2c-msql msql
+11 verbose addNamed [ 'msql', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile d53b20f0-msql msql@
+14 verbose lock msql@ /Users/student/.npm/d53b20f0-msql.lock
+15 silly addNameRange { name: 'msql', range: '*', hasData: false }
+16 silly lockFile d53b20f0-msql msql@
+17 silly lockFile d53b20f0-msql msql@
+18 error 404 'msql' is not in the npm registry.
+18 error 404 You should bug the author to publish it
+18 error 404
+18 error 404 Note that you can also install from a
+18 error 404 tarball, folder, or http url, or git url.
+19 error System Darwin 13.1.0
+20 error command "node" "/Users/student/.nvm/v0.10.26/bin/npm" "install" "msql" "--save"
+21 error cwd /Users/student/Code/donmamaril/2014-04-databases/SQL
+22 error node -v v0.10.26
+23 error npm -v 1.4.6
+24 error code E404
+25 verbose exit [ 1, true ]
