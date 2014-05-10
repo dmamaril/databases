@@ -46,13 +46,14 @@ var handle = function (req, res) {
   // ***** HANDLE GET REQUESTS BASED ON ROOMNAME URL ***** //
   if (req.method === 'GET') {
     headers['Content-type'] = 'application/json';
-    res.writeHead(200, headers);
     if (req.url === '/') {
+      res.writeHead(200, headers);
       dbConnection.query('SELECT * FROM messages', function (err, response) {
         console.log(response);
         res.end(JSON.stringify(response));
       });
     } else {
+      res.writeHead(200, headers);
       dbConnection.query('SELECT * FROM messages where roomname = "' + reqUrl + '"', function (err, response) {
         console.log(response);
         res.end(JSON.stringify(response));
@@ -68,13 +69,16 @@ var handle = function (req, res) {
       message += datum;
     }).on('end', function () {
       message = JSON.parse(message);
-      dbConnection.query('INSERT INTO messages set ? ', message, function (err, res) {
+      dbConnection.query('INSERT INTO messages set ? ', message, function (err) {
         if (err) { throw err; }
         dbConnection.query('SELECT * from messages', function (err, response) { console.log(response); });
       });
       res.end();
     });
   }
+
+  res.writeHead(404, headers);
+  res.end();
 
 };
 
