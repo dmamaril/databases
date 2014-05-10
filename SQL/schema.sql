@@ -11,11 +11,6 @@ CREATE TABLE messages (
  PRIMARY KEY (id)
  );
 
-CREATE TABLE rooms (
-  id int(10) AUTO_INCREMENT,
-  roomname varchar(20),
-  PRIMARY KEY (id)
-);
 /* You can also create more tables, if you need them... */
 
 /*  Execute this file from the command line by typing:

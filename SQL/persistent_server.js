@@ -28,7 +28,7 @@ var headers = {
   'access-control-max-age' : 10
 };
   /*
-    TO DO
+    MYSQL COMMANDS:
     use chat;
     show tables;
     show columns in messages; // displays stuffs in tables
@@ -39,10 +39,11 @@ var headers = {
 
 var handle = function (req, res) {
 
-  console.log('Serving request from ' + req.url + ' for a ' + req.method + ' request.');
   var index = req.url.lastIndexOf('/');
   var reqUrl = req.url.slice(index+1);
+  console.log('Serving request for chatroom: ' + reqUrl + ' with a ' + req.method + ' request.');
 
+  // ***** HANDLE GET REQUESTS BASED ON ROOMNAME URL ***** //
   if (req.method === 'GET') {
     headers['Content-type'] = 'application/json';
     res.writeHead(200, headers);
@@ -52,15 +53,14 @@ var handle = function (req, res) {
         res.end(JSON.stringify(response));
       });
     } else {
-      dbConnection.query('SELECT * FROM roomname where roomname = ' + reqURL, function (err, response) {
+      dbConnection.query('SELECT * FROM messages where roomname = "' + reqUrl + '"', function (err, response) {
         console.log(response);
         res.end(JSON.stringify(response));
       });
     }
   }
 
-
-  // ***** HANLDE POST REQUEST COMPLETE ***** //
+  // ***** HANLDE POST REQUESTS COMPLETE ***** //
   if (req.method === 'POST') {
     res.writeHead(200, headers);
     var message = '';
@@ -70,9 +70,7 @@ var handle = function (req, res) {
       message = JSON.parse(message);
       dbConnection.query('INSERT INTO messages set ? ', message, function (err, res) {
         if (err) { throw err; }
-        dbConnection.query('SELECT * from messages', function (err, response) {
-          console.log(response);
-        });
+        dbConnection.query('SELECT * from messages', function (err, response) { console.log(response); });
       });
       res.end();
     });
@@ -86,7 +84,7 @@ require('http').createServer(handle).listen(3000, '127.0.0.1');
 console.log ('Session started.');
 
 
-// var message = {username: 'don', text: 'will is a genius'};
+// var message = {username: 'don', text: 'will is a genius', roomname: 'lobby'};
 // $.ajax({
 //   url: 'http://127.0.0.1:3000',
 //   type: 'POST',
